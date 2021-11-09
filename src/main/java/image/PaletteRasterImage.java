@@ -12,7 +12,6 @@ public class PaletteRasterImage extends RasterImage implements Image {
 
     public PaletteRasterImage(Color color, int width, int height) {
         super(width, height);
-        createRepresentation();
         palette.add(color);
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -26,7 +25,6 @@ public class PaletteRasterImage extends RasterImage implements Image {
         Matrices.requiresNonNull(pixels);
         Matrices.requiresNonZeroDimensions(pixels);
         Matrices.requiresRectangularMatrix(pixels);
-        createRepresentation();
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {

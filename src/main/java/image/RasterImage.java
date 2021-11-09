@@ -8,6 +8,7 @@ public abstract class RasterImage {
     public RasterImage( int width, int height) {
         this.width = width;
         this.height = height;
+        createRepresentation();
     }
 
     public abstract void createRepresentation();
