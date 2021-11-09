@@ -27,8 +27,8 @@ public class PaletteRasterImage  implements Image {
         Matrices.requiresNonNull(pixels);
         Matrices.requiresNonZeroDimensions(pixels);
         Matrices.requiresRectangularMatrix(pixels);
-        this.width = getWidth();
-        this.height = hashCode();
+        this.width = Matrices.getRowCount(pixels);
+        this.height = Matrices.getColumnCount(pixels);
         createRepresentation();
 
         for (int x = 0; x < width; x++) {
