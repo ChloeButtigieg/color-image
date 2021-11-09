@@ -6,14 +6,12 @@ import util.Matrices;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaletteRasterImage  implements Image {
+public class PaletteRasterImage extends RasterImage implements Image {
     private List<Color> palette;
     private int[][] indexesOfColors;
-    private int width, height;
 
     public PaletteRasterImage(Color color, int width, int height) {
-        this.width = width;
-        this.height = height;
+        super(width, height);
         createRepresentation();
         palette.add(color);
         for (int x = 0; x < width; x++) {
@@ -24,11 +22,10 @@ public class PaletteRasterImage  implements Image {
     }
 
     public PaletteRasterImage(Color[][] pixels) throws NullPointerException, IllegalArgumentException {
+        super(Matrices.getRowCount(pixels), Matrices.getColumnCount(pixels));
         Matrices.requiresNonNull(pixels);
         Matrices.requiresNonZeroDimensions(pixels);
         Matrices.requiresRectangularMatrix(pixels);
-        this.width = Matrices.getRowCount(pixels);
-        this.height = Matrices.getColumnCount(pixels);
         createRepresentation();
 
         for (int x = 0; x < width; x++) {

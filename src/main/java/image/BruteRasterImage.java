@@ -3,13 +3,11 @@ package image;
 import javafx.scene.paint.Color;
 import util.Matrices;
 
-public class BruteRasterImage implements Image {
+public class BruteRasterImage extends RasterImage implements Image  {
     private Color[][] pixels;
-    private int width,height;
 
     public BruteRasterImage(Color color, int width, int height) {
-        this.width = width;
-        this.height = height;
+        super(width, height);
         createRepresentation();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -18,12 +16,10 @@ public class BruteRasterImage implements Image {
         }
     }
     public BruteRasterImage(Color[][] colors) throws NullPointerException, IllegalArgumentException {
+        super(Matrices.getRowCount(colors), Matrices.getColumnCount(colors));
         Matrices.requiresNonNull(colors);
         Matrices.requiresNonZeroDimensions(colors);
         Matrices.requiresRectangularMatrix(colors);
-
-        this.width = Matrices.getRowCount(colors);
-        this.height = Matrices.getColumnCount(colors);
         createRepresentation();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
