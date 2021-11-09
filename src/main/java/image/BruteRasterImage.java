@@ -75,9 +75,7 @@ public class BruteRasterImage implements Image {
 
     protected void setWidth(int width) {
         Color[][] newPixels = new Color[width][height];
-        int maxWidth = width;
-        if (width > this.width) maxWidth = this.width;
-
+        int maxWidth = Math.min(width, this.width);
         for (int x = 0; x < maxWidth; x++) {
             for (int y = 0; y < height; y++) {
                 newPixels[x][y] = pixels[x][y];
@@ -89,9 +87,7 @@ public class BruteRasterImage implements Image {
 
     protected void setHeight(int height) {
         Color[][] newPixels = new Color[width][height];
-        int maxHeight = height;
-        if (height > this.height) maxHeight = this.height;
-
+        int maxHeight = Math.min(height, this.height);
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < maxHeight; y++) {
                 newPixels[x][y] = pixels[x][y];
