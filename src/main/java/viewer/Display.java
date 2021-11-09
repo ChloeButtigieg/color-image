@@ -22,7 +22,7 @@ public class Display implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ImageFactory imageFactory = new BlankImageFactory();
+        ImageFactory imageFactory = new RasterFlagFactory(900,600, Color.BLUE, Color.WHITE, Color.RED, RasterImageType.BRUTE);
         // TODO : changer la fabrique d'image pour construire des images.
 
         this.image = imageFactory.makeImage();
