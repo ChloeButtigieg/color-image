@@ -5,9 +5,12 @@ import util.Matrices;
 
 public class BruteRasterImage implements Image {
     private Color[][] pixels;
+    private int width,height;
 
     public BruteRasterImage(Color color, int width, int height) {
-        pixels = new Color[height][width];
+        this.width = width;
+        this.height = height;
+        createRepresentation();
         for (int x = 0; x < height; x++) {
             for (int y = 0; y < width; y++) {
                 pixels[x][y] = color;
@@ -18,15 +21,18 @@ public class BruteRasterImage implements Image {
         Matrices.requiresNonNull(colors);
         Matrices.requiresNonZeroDimensions(colors);
         Matrices.requiresRectangularMatrix(colors);
-        pixels = new Color[Matrices.getRowCount(colors)][Matrices.getColumnCount(colors)];
-        for (int x = 0; x < Matrices.getRowCount(colors); x++) {
-            for (int y = 0; y < Matrices.getColumnCount(colors); y++) {
+
+        this.width = Matrices.getColumnCount(colors);
+        this.height = Matrices.getRowCount(colors);
+        createRepresentation();
+        for (int x = 0; x < height; x++) {
+            for (int y = 0; y < width; y++) {
                 pixels[x][y] = colors[x][y];
             }
         }
     }
     public void createRepresentation() {
-
+        pixels = new Color[height][width];
     }
 
     public void setPixelColor(Color color, int x, int y) {
@@ -42,16 +48,16 @@ public class BruteRasterImage implements Image {
         Matrices.requiresNonNull(pixels);
         Matrices.requiresNonZeroDimensions(pixels);
         Matrices.requiresRectangularMatrix(pixels);
-        for (int x = 0; x < Matrices.getRowCount(pixels); x++) {
-            for (int y = 0; y < Matrices.getColumnCount(pixels); y++) {
-                pixels[x][y] = pixels[x][y];
+        for (int x = 0; x < height; x++) {
+            for (int y = 0; y < width; y++) {
+                this.pixels[x][y] = pixels[x][y];
             }
         }
     }
 
     private void setPixelsColor(Color color) {
-        for (int x = 0; x < Matrices.getRowCount(pixels); x++) {
-            for (int y = 0; y < Matrices.getColumnCount(pixels); y++) {
+        for (int x = 0; x < height; x++) {
+            for (int y = 0; y < width; y++) {
                 pixels[x][y] = color;
             }
         }
@@ -59,25 +65,39 @@ public class BruteRasterImage implements Image {
 
     @Override
     public int getHeight() {
-        return Matrices.getRowCount(pixels);
+        return this.height;
     }
 
     @Override
     public int getWidth() {
-        return Matrices.getColumnCount(pixels);
+        return this.width;
     }
 
     protected void setWidth(int width) {
-        Color[][] newPixels = new Color[Matrices.getRowCount(pixels)][width];
+        Color[][] newPixels = new Color[height][width];
+        int maxWidth = width;
+        if (width > this.width) maxWidth = this.width;
+
         for (int x = 0; x < Matrices.getRowCount(pixels); x++) {
-            for (int y = 0; y < width; y++) {
+            for (int y = 0; y < maxWidth; y++) {
                 newPixels[x][y] = pixels[x][y];
             }
         }
+        this.width = width;
         pixels = newPixels;
     }
 
     protected void setHeight(int height) {
+        Color[][] newPixels = new Color[height][width];
+        int maxHeight = height;
+        if (height > this.height) maxHeight = this.height;
 
+        for (int x = 0; x < maxHeight; x++) {
+            for (int y = 0; y < width; y++) {
+                newPixels[x][y] = pixels[x][y];
+            }
+        }
+        this.height = height;
+        pixels = newPixels;
     }
 }
